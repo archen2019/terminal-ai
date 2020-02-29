@@ -16,7 +16,7 @@ Advanced strategy tips:
   the actual current map state.
 """
 
-counter = 3
+counter = 2
 cycle = 0
 enemy_change = False
 last_breach = False
@@ -116,8 +116,8 @@ class AlgoStrategy(gamelib.AlgoCore):
             if last_breach and not new_breach:
                 enemy_change = True
 
-        if game_state.turn_number > 10:
-            if not new_breach and not last_breach and counter < 5:
+        if cycle // counter > 4:
+            if not new_breach and not last_breach and counter < 4:
                 counter += 1
                 return
 
