@@ -137,9 +137,9 @@ class AlgoStrategy(gamelib.AlgoCore):
         game_state.attempt_spawn(DESTRUCTOR, destructor_locations2)
 
         # upgrade filters so they soak more damage
-        game_state.attempt_upgrade(mid_filters)
         game_state.attempt_upgrade(left_filters)
         game_state.attempt_upgrade(right_filters)
+        game_state.attempt_upgrade(mid_filters)
 
     def build_reactive_defense(self, game_state):
         """
