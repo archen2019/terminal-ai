@@ -102,8 +102,8 @@ class AlgoStrategy(gamelib.AlgoCore):
         index = random.randrange(4);
         best_location = ping_spawn_location_options[index]
         emp_count = int(game_state.get_resource(BITS) // 13)
-        if count == 0:
-            count = 1
+        if emp_count == 0:
+            emp_count = 1
         ping_count = int(game_state.get_resource(BITS) - 3 * emp_count)
 
         if best_location[0] < 14:
