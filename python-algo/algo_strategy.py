@@ -93,8 +93,10 @@ class AlgoStrategy(gamelib.AlgoCore):
                 # Sending more at once is better since attacks can only hit a single ping at a time
                 if game_state.turn_number % 2 == 1:
                     # To simplify we will just check sending them from back left and right
+                    index = random.randrange(4);
                     ping_spawn_location_options = [[8, 5], [7, 6], [20, 6], [19, 5]]
-                    best_location = self.least_damage_spawn_location(game_state, ping_spawn_location_options)
+                    # best_location = self.least_damage_spawn_location(game_state, ping_spawn_location_options)
+                    best_location = ping_spawn_location_options[index]
                     game_state.attempt_spawn(PING, best_location, 2)
                     if best_location[0] < 14:
                         game_state.attempt_spawn(EMP, [best_location[0]+1, best_location[1]-1], 1)
@@ -103,16 +105,22 @@ class AlgoStrategy(gamelib.AlgoCore):
                     game_state.attempt_spawn(PING, best_location, 1000)
 
                 # Lastly, if we have spare cores, let's build some Encryptors to boost our Pings' health.
-                encryptor_locations = [[13, 2], [14, 2], [13, 3], [14, 3]]
+                encryptor_locations = [[6, 9], [6, 10], [7, 9], [7, 10]]
                 game_state.attempt_spawn(ENCRYPTOR, encryptor_locations)
 
     def build_emp_ping_combo(self, game_state):
         # build emp one to the right and up of the pings
-        ping_locations = [[23,9]]
-        emp_locations = [[24,10]]
-
-        game_state.attempt_spawn(PING, ping_locations);
-        game_state.attempt_spawn(EMP, emp_locations);
+        ping_spawn_location_options = [[8, 5], [7, 6], [20, 6], [19, 5]]
+        best_location = self.least_damage_spawn_location(game_state, ping_spawn_location_options)
+        count = game_state.get_resource(BITS) // 13;
+        if count == 0:
+            count = 1
+        if best_location[0] < 14:
+            game_state.attempt_spawn(PING, best_location, game_state.get_resource(BITS) - 3 * count)
+            game_state.attempt_spawn(EMP, [best_location[0]+1, best_location[1]-1], count)
+        else:
+            game_state.attempt_spawn(PING, best_location, game_state.get_resource(BITS) - 3 * count)
+            game_state.attempt_spawn(EMP, [best_location[0]-1, best_location[1]-1], count)
 
 
     def build_defences(self, game_state):
