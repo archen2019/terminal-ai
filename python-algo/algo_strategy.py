@@ -107,7 +107,7 @@ class AlgoStrategy(gamelib.AlgoCore):
             game_state.attempt_spawn(ENCRYPTOR, encryptor_locations)
 
     def build_emp_ping_combo(self, game_state):
-        global enemy_change, last_breach, last_index, counter
+        global enemy_change, last_breach, last_index, counter, breachnum
         # build emp one to the right and up of the pings
         ping_spawn_location_options = [[8, 5], [22, 8]]
         new_breach = (breachnum > 2)
@@ -167,14 +167,14 @@ class AlgoStrategy(gamelib.AlgoCore):
         game_state.attempt_spawn(FILTER, right_filters)
         game_state.attempt_spawn(FILTER, left_filters)
 
+        destructors2 = [[2, 12], [25, 12], [1, 12], [23, 11]]
+        game_state.attempt_spawn(DESTRUCTOR, destructors2)
+
         # Extra defenses later game
         left_filters2 = [[8, 11], [0, 13], [1, 13], [3, 13], [3, 12]]
         right_filters2 = [[19, 11], [27, 13], [26, 13], [24, 13], [24, 12]]
         game_state.attempt_spawn(FILTER, right_filters2)
         game_state.attempt_spawn(FILTER, left_filters2)
-
-        destructors2 = [[2, 12], [25, 12], [1, 12], [23, 11]]
-        game_state.attempt_spawn(DESTRUCTOR, destructors2)
 
         # upgrade filters so they soak more damage
         game_state.attempt_upgrade(right_filters)
