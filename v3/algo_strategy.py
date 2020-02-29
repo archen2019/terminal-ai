@@ -145,8 +145,8 @@ class AlgoStrategy(gamelib.AlgoCore):
 
         game_state.attempt_upgrade(destructors)
 
-        encryptor_locations = [[13, 2], [14, 2], [13, 3], [14, 3]]
-        game_state.attempt_spawn(ENCRYPTOR, encryptor_locations)
+        encryptors = [[13, 2], [14, 2], [13, 3], [14, 3]]
+        game_state.attempt_spawn(ENCRYPTOR, encryptors)
 
         game_state.attempt_upgrade(destructors2)
         game_state.attempt_upgrade(destructors3)
