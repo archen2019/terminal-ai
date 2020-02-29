@@ -109,7 +109,7 @@ class AlgoStrategy(gamelib.AlgoCore):
     def build_emp_ping_combo(self, game_state):
         global enemy_change, last_breach, last_index, counter
         # build emp one to the right and up of the pings
-        ping_spawn_location_options = [[8, 5], [22, 8]]
+        ping_spawn_location_options = [[8, 5], [23, 9]]
         new_breach = (breachnum > 2)
 
         if not enemy_change:
@@ -117,7 +117,7 @@ class AlgoStrategy(gamelib.AlgoCore):
                 enemy_change = True
 
         if game_state.turn_number > 10:
-            if not new_breach and not last_breach:
+            if not new_breach and not last_breach and counter < 5:
                 counter += 1
                 return
 
