@@ -196,7 +196,7 @@ class AlgoStrategy(gamelib.AlgoCore):
 
         # Now let's build out a line of stationary units. This will prevent our EMPs from running into the enemy base.
         # Instead they will stay at the perfect distance to attack the front two rows of the enemy base.
-        for x in range(27, 5, -1):
+        for x in range(24, 5, -1):
             game_state.attempt_spawn(cheapest_unit, [x, 11])
 
         # Now spawn EMPs next to the line
