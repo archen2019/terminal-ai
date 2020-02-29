@@ -90,8 +90,8 @@ class AlgoStrategy(gamelib.AlgoCore):
             # Sending more at once is better since attacks can only hit a single ping at a time
             if self.detect_enemy_unit(game_state, unit_type=None, valid_x=None, valid_y=[14, 15]) > 15:
                 self.emp_line_strategy(game_state)
-            elif self.detect_enemy_unit(game_state, unit_type=None, valid_x=[12, 13, 14, 15], valid_y = [14, 15]) > 10:
-                game_state.attempt_spawn(SCRAMBLER, [8, 5])
+            elif self.detect_enemy_unit(game_state, unit_type=None, valid_x=[10, 11, 12, 13, 14, 15, 16, 17], valid_y = [14, 15]) > 10:
+                game_state.attempt_spawn(SCRAMBLER, [19, 5])
             if game_state.turn_number % 3 == 2:
                 # To simplify we will just check sending them from back left and right
                 self.build_emp_ping_combo(game_state)
@@ -142,7 +142,7 @@ class AlgoStrategy(gamelib.AlgoCore):
 
         # Extra defenses later game
         left_filters2 = [[8, 11], [0, 13], [1, 13], [3, 13], [3, 12]]
-        right_filters2 = [[19, 11], [27, 13], [26, 13], [24, 12]]
+        right_filters2 = [[19, 11], [27, 13], [26, 13], [24, 13], [24, 12]]
         game_state.attempt_spawn(FILTER, right_filters2)
         game_state.attempt_spawn(FILTER, left_filters2)
 
@@ -164,7 +164,7 @@ class AlgoStrategy(gamelib.AlgoCore):
         game_state.attempt_upgrade(destructors2)
         game_state.attempt_upgrade(destructors3)
 
-        destructors4 = [[11, 10], [12, 10], [15, 10], [16, 10]]
+        destructors4 = [[12, 10], [15, 10]]
         game_state.attempt_spawn(DESTRUCTOR, destructors4)
         game_state.attempt_upgrade(destructors4)
 
