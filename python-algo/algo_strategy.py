@@ -88,6 +88,10 @@ class AlgoStrategy(gamelib.AlgoCore):
             # They don't have many units in the front so lets figure out their least defended area and send Pings there.
             # Only spawn Ping's every other turn
             # Sending more at once is better since attacks can only hit a single ping at a time
+            if self.detect_enemy_unit(game_state, unit_type=None, valid_x=None, valid_y=[14, 15]) > 15:
+                self.emp_line_strategy(game_state)
+            elif self.detect_enemy_unit(game_state, unit_type=None, valid_x=[10, 11, 12, 13, 14, 15, 16, 17], valid_y = [14, 15]) > 10:
+                game_state.attempt_spawn(SCRAMBLER, [19, 5])
             if cycle % counter == (counter - 1):
                 # To simplify we will just check sending them from back left and right
                 self.build_emp_ping_combo(game_state)
@@ -172,26 +176,32 @@ class AlgoStrategy(gamelib.AlgoCore):
         game_state.attempt_spawn(FILTER, left_filters)
 
         # Extra defenses later game
-        # mid_filters2 = []
-        left_filters2 = [[8, 11], [0, 13], [1, 13]]
-        right_filters2 = [[19, 11], [27, 13], [26, 13], [24, 12]]
-        # game_state.attempt_spawn(FILTER, mid_filters2)
+        left_filters2 = [[8, 11], [0, 13], [1, 13], [3, 13], [3, 12]]
+        right_filters2 = [[19, 11], [27, 13], [26, 13], [24, 13], [24, 12]]
         game_state.attempt_spawn(FILTER, right_filters2)
         game_state.attempt_spawn(FILTER, left_filters2)
 
-        destructors2 = [[2, 12], [25, 12], [1, 12], [26, 12]]
+        destructors2 = [[2, 12], [25, 12], [1, 12], [23, 11]]
         game_state.attempt_spawn(DESTRUCTOR, destructors2)
 
         # upgrade filters so they soak more damage
         game_state.attempt_upgrade(right_filters)
         game_state.attempt_upgrade(left_filters)
-        # game_state.attempt_upgrade(mid_filters)
 
-        destructors3 = [[2, 11], [3, 13], [24, 13], [25, 11]]
+        destructors3 = [[2, 11], [24, 11], [20, 10], [21, 10]]
         game_state.attempt_spawn(DESTRUCTOR, destructors3)
 
         game_state.attempt_upgrade(destructors)
+
+        encryptors = [[5, 10], [6, 10], [7, 10], [6, 9], [7, 9]]
+        game_state.attempt_spawn(ENCRYPTOR, encryptors)
+
         game_state.attempt_upgrade(destructors2)
+        game_state.attempt_upgrade(destructors3)
+
+        destructors4 = [[12, 10], [15, 10]]
+        game_state.attempt_spawn(DESTRUCTOR, destructors4)
+        game_state.attempt_upgrade(destructors4)
 
     def build_reactive_defense(self, game_state):
         """
@@ -201,7 +211,7 @@ class AlgoStrategy(gamelib.AlgoCore):
         """
         for location in self.scored_on_locations:
             # Build destructor one space above so that it doesn't block our own edge spawn locations
-            build_location = [location[0], location[1]+1]
+            build_location = [location[0], location[1]+2]
             game_state.attempt_spawn(DESTRUCTOR, build_location)
 
     def stall_with_scramblers(self, game_state):
