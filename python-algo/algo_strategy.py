@@ -90,7 +90,7 @@ class AlgoStrategy(gamelib.AlgoCore):
             # Sending more at once is better since attacks can only hit a single ping at a time
             if game_state.turn_number % 3 == 2:
                 # To simplify we will just check sending them from back left and right
-                build_emp_ping_combo(game_state)
+                self.build_emp_ping_combo(game_state)
 
             # Lastly, if we have spare cores, let's build some Encryptors to boost our Pings' health.
             encryptor_locations = [[6, 9], [6, 10], [7, 9], [7, 10]]
@@ -101,18 +101,23 @@ class AlgoStrategy(gamelib.AlgoCore):
         ping_spawn_location_options = [[8, 5], [7, 6], [22, 8], [23, 9]]
         index = random.randrange(4);
         best_location = ping_spawn_location_options[index]
-        count = game_state.get_resource(BITS) // 13;
+        emp_count = int(game_state.get_resource(BITS) // 13)
         if count == 0:
             count = 1
-        if best_location[0] < 14:
-            game_state.attempt_spawn(PING, best_location, game_state.get_resource(BITS) - 3 * count)
-            game_state.attempt_spawn(EMP, [best_location[0]+1, best_location[1]-1], count)
-        else:
-            game_state.attempt_spawn(PING, best_location, game_state.get_resource(BITS) - 3 * count)
-            game_state.attempt_spawn(EMP, [best_location[0]+1, best_location[1]+1], count)
+        ping_count = int(game_state.get_resource(BITS) - 3 * emp_count)
 
-    def is_successful(game_state):
-        s = "something"
+        if best_location[0] < 14:
+            game_state.attempt_spawn(PING, best_location, ping_count)
+            game_state.attempt_spawn(EMP, [best_location[0]+1, best_location[1]-1], emp_count)
+        else:
+            game_state.attempt_spawn(PING, best_location, ping_count)
+            game_state.attempt_spawn(EMP, [best_location[0]+1, best_location[1]+1], emp_count)
+
+    def breach_successful(game_state):
+        state = json.loads(turn_string)
+        events = state["events"]
+        breaches = events["breach"]
+        return len(breaches) > 3
 
     def build_defences(self, game_state):
         """
