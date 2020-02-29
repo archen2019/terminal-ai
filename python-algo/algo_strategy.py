@@ -145,7 +145,7 @@ class AlgoStrategy(gamelib.AlgoCore):
         game_state.attempt_upgrade(left_filters)
         # game_state.attempt_upgrade(mid_filters)
 
-        destructors3 = [[20, 10], [21, 10]]
+        destructors3 = [[2, 11], [3, 13], [24, 13], [25, 11]]
         game_state.attempt_spawn(DESTRUCTOR, destructors3)
 
         game_state.attempt_upgrade(destructors)
@@ -200,7 +200,7 @@ class AlgoStrategy(gamelib.AlgoCore):
 
         # Now let's build out a line of stationary units. This will prevent our EMPs from running into the enemy base.
         # Instead they will stay at the perfect distance to attack the front two rows of the enemy base.
-        for x in range(27, 5, -1):
+        for x in range(24, 5, -1):
             game_state.attempt_spawn(cheapest_unit, [x, 11])
 
         # Now spawn EMPs next to the line
