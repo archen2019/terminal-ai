@@ -101,6 +101,10 @@ class AlgoStrategy(gamelib.AlgoCore):
                 encryptor_locations = [[13, 2], [14, 2], [13, 3], [14, 3]]
                 game_state.attempt_spawn(ENCRYPTOR, encryptor_locations)
 
+    def build_emp_ping_combo(self, game_state):
+        ping_locations = [[23,9]]
+        emp_locations = [[24,10]]
+
     def build_defences(self, game_state):
         """
         Build basic defenses using hardcoded locations.
