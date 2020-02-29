@@ -103,16 +103,23 @@ class AlgoStrategy(gamelib.AlgoCore):
                     game_state.attempt_spawn(PING, best_location, 1000)
 
                 # Lastly, if we have spare cores, let's build some Encryptors to boost our Pings' health.
-                encryptor_locations = [[13, 2], [14, 2], [13, 3], [14, 3]]
+                encryptor_locations = [[6, 9], [7, 9], [6, 10], [7, 10]]
                 game_state.attempt_spawn(ENCRYPTOR, encryptor_locations)
 
     def build_emp_ping_combo(self, game_state):
         # build emp one to the right and up of the pings
-        ping_locations = [[23,9]]
-        emp_locations = [[24,10]]
+        ping_spawn_location_options = [[8, 5], [7, 6], [20, 6], [19, 5], [23, 9]]
+        best_location = self.least_damage_spawn_location(game_state, ping_spawn_location_options)
+        game_state.attempt_spawn(PING, best_location, 2)
+        count = game_state.get_resource(BITS) // 13;
+        if best_location[0] < 14:
+            for i in range():
+                game_state.attempt_spawn(EMP, [best_location[0]+1, best_location[1]-1], 1)
+        else:
+            game_state.attempt_spawn(EMP, [best_location[0]-1, best_location[1]-1], 1)
+        game_state.attempt_spawn(PING, best_location, 1000)
 
-        game_state.attempt_spawn(PING, ping_locations);
-        game_state.attempt_spawn(EMP, emp_locations);
+
 
 
     def build_defences(self, game_state):
