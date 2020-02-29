@@ -22,6 +22,7 @@ enemy_change = False
 last_breach = False
 last_index = 0
 breachnum = 0
+last_hp = 30
 
 class AlgoStrategy(gamelib.AlgoCore):
     def __init__(self):
@@ -107,10 +108,11 @@ class AlgoStrategy(gamelib.AlgoCore):
             game_state.attempt_spawn(ENCRYPTOR, encryptor_locations)
 
     def build_emp_ping_combo(self, game_state):
-        global enemy_change, last_breach, last_index, counter, breachnum
+        global enemy_change, last_breach, last_index, counter, breachnum, last_hp
         # build emp one to the right and up of the pings
         ping_spawn_location_options = [[8, 5], [23, 9]]
-        new_breach = True
+        # new_breach = True
+        new_breach = (last_hp - game_state.enemy_health) > 2
         """
         if not enemy_change:
             if last_breach and not new_breach:
@@ -145,6 +147,7 @@ class AlgoStrategy(gamelib.AlgoCore):
 
         last_index = best_index
         last_breach = new_breach
+        last_hp = game_state.enemy_health
 
     def build_defences(self, game_state):
         """
