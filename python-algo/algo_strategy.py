@@ -110,7 +110,7 @@ class AlgoStrategy(gamelib.AlgoCore):
         global enemy_change, last_breach, last_index, counter, breachnum
         # build emp one to the right and up of the pings
         ping_spawn_location_options = [[8, 5], [23, 9]]
-        new_breach = (breachnum > 2)
+        new_breach = True
         """
         if not enemy_change:
             if last_breach and not new_breach:
