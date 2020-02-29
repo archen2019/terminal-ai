@@ -95,8 +95,8 @@ class AlgoStrategy(gamelib.AlgoCore):
             # Sending more at once is better since attacks can only hit a single ping at a time
             if self.detect_enemy_unit(game_state, unit_type=None, valid_x=None, valid_y=[14, 15]) > 15:
                 self.emp_line_strategy(game_state)
-            elif self.detect_enemy_unit(game_state, unit_type=None, valid_x=[10, 11, 12, 13, 14, 15, 16, 17], valid_y = [14, 15]) > 10:
-                game_state.attempt_spawn(SCRAMBLER, [19, 5])
+            elif self.detect_enemy_unit(game_state, unit_type=None, valid_x=None, valid_y = [10, 12, 13, 14, 15]) > 10:
+                game_state.attempt_spawn(SCRAMBLER, [23, 10])
             if cycle % counter == (counter - 1):
                 # To simplify we will just check sending them from back left and right
                 self.build_emp_ping_combo(game_state)
