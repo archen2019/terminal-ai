@@ -59,7 +59,7 @@ class AlgoStrategy(gamelib.AlgoCore):
         gamelib.debug_write('Performing turn {} of your custom algo strategy'.format(game_state.turn_number))
         game_state.suppress_warnings(True)  #Comment or remove this line to enable warnings.
 
-        self.starter_strategy(game_state)
+        self.strategy(game_state)
 
         game_state.submit_turn()
 
@@ -69,8 +69,7 @@ class AlgoStrategy(gamelib.AlgoCore):
     strategy and can safely be replaced for your custom algo.
     """
 
-    def starter_strategy(self, game_state):
-        game_state.attempt_spawn(EMP, [24, 10], 3)
+    def strategy(self, game_state):
         """
         For defense we will use a spread out layout and some Scramblers early on.
         We will place destructors near locations the opponent managed to score on.
@@ -114,15 +113,33 @@ class AlgoStrategy(gamelib.AlgoCore):
         # More community tools available at: https://terminal.c1games.com/rules#Download
 
         # Place destructors that attack enemy units
-        destructor_locations = [[0, 13], [27, 13], [8, 11], [19, 11], [13, 11], [14, 11]]
+        destructor_locations = [[2, 13], [25, 13], [9, 11], [18, 11]]
         # attempt_spawn will try to spawn units if we have resources, and will check if a blocking unit is already there
         game_state.attempt_spawn(DESTRUCTOR, destructor_locations)
         
         # Place filters in front of destructors to soak up damage for them
-        filter_locations = [[8, 12], [19, 12]]
-        game_state.attempt_spawn(FILTER, filter_locations)
+        mid_filters = [[10, 11], [11, 11], [12, 11], [13, 11], [14, 11], [15, 11], [16, 11], [17, 11]]
+        left_filters = [[4, 12], [5, 11], [6, 11], [7, 11]]
+        right_filters = [[20, 11], [21, 11], [22, 11], [23, 12]]
+        game_state.attempt_spawn(FILTER, mid_filters)
+        game_state.attempt_spawn(FILTER, left_filters)
+        game_state.attempt_spawn(FILTER, right_filters)
+
+        # Extra defenses later game
+        # mid_filters2 = []
+        left_filters2 = [[8, 11]]
+        right_filters2 = [[19, 11]]
+        # game_state.attempt_spawn(FILTER, mid_filters2)
+        game_state.attempt_spawn(FILTER, left_filters2)
+        game_state.attempt_spawn(FILTER, right_filters2)
+
+        destructor_locations2 = [[2, 12], [25, 12]]
+        game_state.attempt_spawn(DESTRUCTOR, destructor_locations2)
+
         # upgrade filters so they soak more damage
-        game_state.attempt_upgrade(filter_locations)
+        game_state.attempt_upgrade(mid_filters)
+        game_state.attempt_upgrade(left_filters)
+        game_state.attempt_upgrade(right_filters)
 
     def build_reactive_defense(self, game_state):
         """
