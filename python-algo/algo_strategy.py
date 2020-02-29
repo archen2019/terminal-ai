@@ -105,8 +105,13 @@ class AlgoStrategy(gamelib.AlgoCore):
                 game_state.attempt_spawn(ENCRYPTOR, encryptor_locations)
 
     def build_emp_ping_combo(self, game_state):
+        # build emp one to the right and up of the pings
         ping_locations = [[23,9]]
         emp_locations = [[24,10]]
+
+        game_state.attempt_spawn(PING, ping_locations);
+        game_state.attempt_spawn(EMP, emp_locations);
+
 
     def build_defences(self, game_state):
         """
