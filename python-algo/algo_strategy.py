@@ -98,7 +98,7 @@ class AlgoStrategy(gamelib.AlgoCore):
 
             cycle += 1
             # Lastly, if we have spare cores, let's build some Encryptors to boost our Pings' health.
-            encryptor_locations = [[6, 9], [6, 10], [7, 9], [7, 10]]
+            encryptor_locations = [[5, 10], [6, 10], [7, 10], [6, 9], [7, 9]]
             game_state.attempt_spawn(ENCRYPTOR, encryptor_locations)
 
     enemy_change = False
