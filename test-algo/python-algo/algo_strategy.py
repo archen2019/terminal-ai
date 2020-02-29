@@ -119,27 +119,27 @@ class AlgoStrategy(gamelib.AlgoCore):
         
         # Place filters in front of destructors to soak up damage for them
         mid_filters = [[10, 11], [11, 11], [12, 11], [13, 11], [14, 11], [15, 11], [16, 11], [17, 11]]
-        left_filters = [[5, 11], [6, 11], [7, 11]]
-        right_filters = [[20, 11], [21, 11], [22, 11], [23, 11], [23, 12]]
+        left_filters = [[4, 12], [5, 11], [6, 11], [7, 11]]
+        right_filters = [[20, 11], [21, 11], [22, 11], [23, 12]]
         game_state.attempt_spawn(FILTER, mid_filters)
-        game_state.attempt_spawn(FILTER, right_filters)
         game_state.attempt_spawn(FILTER, left_filters)
+        game_state.attempt_spawn(FILTER, right_filters)
 
         # Extra defenses later game
         # mid_filters2 = []
-        left_filters2 = [[8, 11], [0, 13], [1, 13]]
-        right_filters2 = [[19, 11], [27, 13], [26, 13], [24, 12]]
+        left_filters2 = [[8, 11]]
+        right_filters2 = [[19, 11]]
         # game_state.attempt_spawn(FILTER, mid_filters2)
-        game_state.attempt_spawn(FILTER, right_filters2)
         game_state.attempt_spawn(FILTER, left_filters2)
+        game_state.attempt_spawn(FILTER, right_filters2)
 
-        destructor_locations2 = [[2, 12], [25, 12], [1, 12], [26, 12]]
+        destructor_locations2 = [[2, 12], [25, 12], [1, 13], [26, 13]]
         game_state.attempt_spawn(DESTRUCTOR, destructor_locations2)
 
         # upgrade filters so they soak more damage
-        game_state.attempt_upgrade(right_filters)
         game_state.attempt_upgrade(left_filters)
-        # game_state.attempt_upgrade(mid_filters)
+        game_state.attempt_upgrade(right_filters)
+        game_state.attempt_upgrade(mid_filters)
 
     def build_reactive_defense(self, game_state):
         """
