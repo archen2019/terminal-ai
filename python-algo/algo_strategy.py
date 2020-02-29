@@ -111,23 +111,23 @@ class AlgoStrategy(gamelib.AlgoCore):
         # build emp one to the right and up of the pings
         ping_spawn_location_options = [[8, 5], [23, 9]]
         new_breach = (breachnum > 2)
-
+        """
         if not enemy_change:
             if last_breach and not new_breach:
                 enemy_change = True
-
+        """
         if cycle // counter > 4:
             if not new_breach and not last_breach and counter < 4:
                 counter += 1
                 return
 
-        if enemy_change:
+        """if enemy_change:
             best_index = 1 - last_index
+        else:"""
+        if new_breach:
+            best_index = last_index
         else:
-            if new_breach:
-                best_index = last_index
-            else:
-                best_index = 1 - last_index
+            best_index = 1 - last_index
 
         best_location = ping_spawn_location_options[best_index]
 
