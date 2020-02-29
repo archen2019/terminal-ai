@@ -41,9 +41,6 @@ class AlgoStrategy(gamelib.AlgoCore):
         # This is a good place to do initial setup
         self.scored_on_locations = []
 
-
-
-
     def on_turn(self, turn_state):
         """
         This function is called every turn with the game state wrapper as
@@ -65,6 +62,9 @@ class AlgoStrategy(gamelib.AlgoCore):
     NOTE: All the methods after this point are part of the sample starter-algo
     strategy and can safely be replaced for your custom algo.
     """
+
+    counter = 3
+    cycle = 0
 
     def strategy(self, game_state):
         """
@@ -88,19 +88,47 @@ class AlgoStrategy(gamelib.AlgoCore):
             # They don't have many units in the front so lets figure out their least defended area and send Pings there.
             # Only spawn Ping's every other turn
             # Sending more at once is better since attacks can only hit a single ping at a time
-            if game_state.turn_number % 3 == 2:
+            if cycle % counter == (counter - 1):
                 # To simplify we will just check sending them from back left and right
                 self.build_emp_ping_combo(game_state)
 
+            cycle += 1
             # Lastly, if we have spare cores, let's build some Encryptors to boost our Pings' health.
             encryptor_locations = [[6, 9], [6, 10], [7, 9], [7, 10]]
             game_state.attempt_spawn(ENCRYPTOR, encryptor_locations)
 
+    enemy_change = False
+    last_breach = False
+    last_index = 0
+
     def build_emp_ping_combo(self, game_state):
         # build emp one to the right and up of the pings
-        ping_spawn_location_options = [[8, 5], [7, 6], [22, 8], [23, 9]]
-        index = random.randrange(4);
-        best_location = ping_spawn_location_options[index]
+        ping_spawn_location_options = [[8, 5], [22, 8]]
+        new_breach = self.breach_successful(game_state)
+
+        if(!enemy_change){
+            if(last_breach and !new_breach){
+                enemy_change = True
+            }
+        }
+
+        if(!new_breach && !last_breach){
+            counter += 1
+            return
+        }
+
+        if(enemy_change){
+            best_index = 1 - last_index
+        }else{
+            if(new_breach){
+                best_index = last_index
+            }else{
+                best_index = 1 - last_index
+            }
+        }
+
+        best_location = ping_spawn_location_options[best_index]
+
         emp_count = int(game_state.get_resource(BITS) // 13)
         if emp_count == 0:
             emp_count = 1
@@ -112,6 +140,9 @@ class AlgoStrategy(gamelib.AlgoCore):
         else:
             game_state.attempt_spawn(PING, best_location, ping_count)
             game_state.attempt_spawn(EMP, [best_location[0]+1, best_location[1]+1], emp_count)
+
+        last_index = best_index
+        last_breach = new_breach
 
     def breach_successful(game_state):
         state = json.loads(turn_string)
