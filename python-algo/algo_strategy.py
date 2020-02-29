@@ -9,11 +9,8 @@ import json
 """
 Most of the algo code you write will be in this file unless you create new
 modules yourself. Start by modifying the 'on_turn' function.
-
 Advanced strategy tips:
-
   - You can analyze action frames by modifying on_action_frame function
-
   - The GameState.map object can be manually manipulated to create hypothetical
   board states. Though, we recommended making a copy of the map to preserve
   the actual current map state.
@@ -96,8 +93,13 @@ class AlgoStrategy(gamelib.AlgoCore):
                 # Sending more at once is better since attacks can only hit a single ping at a time
                 if game_state.turn_number % 2 == 1:
                     # To simplify we will just check sending them from back left and right
-                    ping_spawn_location_options = [[13, 0], [14, 0]]
+                    ping_spawn_location_options = [[8, 5], [7, 6], [20, 6], [19, 5]]
                     best_location = self.least_damage_spawn_location(game_state, ping_spawn_location_options)
+                    game_state.attempt_spawn(PING, best_location, 2)
+                    if best_location[0] < 14:
+                        game_state.attempt_spawn(EMP, [best_location[0]+1, best_location[1]-1], 1)
+                    else:
+                        game_state.attempt_spawn(EMP, [best_location[0]-1, best_location[1]-1], 1)
                     game_state.attempt_spawn(PING, best_location, 1000)
 
                 # Lastly, if we have spare cores, let's build some Encryptors to boost our Pings' health.
