@@ -1,0 +1,19 @@
+Random seed: 8329764550174747870
+---------------- Starting Your Algo --------------------
+Configuring your custom algo strategy...
+Performing turn 0 of your custom algo strategy
+Performing turn 1 of your custom algo strategy
+Performing turn 2 of your custom algo strategy
+Performing turn 3 of your custom algo strategy
+Performing turn 4 of your custom algo strategy
+Performing turn 5 of your custom algo strategy
+Traceback (most recent call last):
+  File "/home/archen/terminal-ai/python-algo/algo_strategy.py", line 317, in <module>
+    algo.start()
+  File "/home/archen/terminal-ai/python-algo/gamelib/algocore.py", line 74, in start
+    self.on_turn(game_state_string)
+  File "/home/archen/terminal-ai/python-algo/algo_strategy.py", line 59, in on_turn
+    self.strategy(game_state)
+  File "/home/archen/terminal-ai/python-algo/algo_strategy.py", line 95, in strategy
+    if cycle % counter == (counter - 1):
+UnboundLocalError: local variable 'cycle' referenced before assignment

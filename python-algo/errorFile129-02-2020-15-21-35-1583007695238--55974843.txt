@@ -1,0 +1,23 @@
+Random seed: 8803880576212155685
+---------------- Starting Your Algo --------------------
+Configuring your custom algo strategy...
+Performing turn 0 of your custom algo strategy
+Performing turn 1 of your custom algo strategy
+Performing turn 2 of your custom algo strategy
+Performing turn 3 of your custom algo strategy
+Performing turn 4 of your custom algo strategy
+Performing turn 5 of your custom algo strategy
+Performing turn 6 of your custom algo strategy
+Performing turn 7 of your custom algo strategy
+Traceback (most recent call last):
+  File "/home/archen/terminal-ai/python-algo/algo_strategy.py", line 319, in <module>
+    algo.start()
+  File "/home/archen/terminal-ai/python-algo/gamelib/algocore.py", line 74, in start
+    self.on_turn(game_state_string)
+  File "/home/archen/terminal-ai/python-algo/algo_strategy.py", line 63, in on_turn
+    self.strategy(game_state)
+  File "/home/archen/terminal-ai/python-algo/algo_strategy.py", line 102, in strategy
+    self.build_emp_ping_combo(game_state)
+  File "/home/archen/terminal-ai/python-algo/algo_strategy.py", line 120, in build_emp_ping_combo
+    counter += 1
+UnboundLocalError: local variable 'counter' referenced before assignment

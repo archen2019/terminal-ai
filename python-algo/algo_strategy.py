@@ -16,6 +16,13 @@ Advanced strategy tips:
   the actual current map state.
 """
 
+counter = 3
+cycle = 0
+enemy_change = False
+last_breach = False
+last_index = 0
+breachnum = 0
+
 class AlgoStrategy(gamelib.AlgoCore):
     def __init__(self):
         super().__init__()
@@ -63,9 +70,6 @@ class AlgoStrategy(gamelib.AlgoCore):
     strategy and can safely be replaced for your custom algo.
     """
 
-    counter = 3
-    cycle = 0
-
     def strategy(self, game_state):
         """
         For defense we will use a spread out layout and some Scramblers early on.
@@ -73,6 +77,7 @@ class AlgoStrategy(gamelib.AlgoCore):
         For offense we will use long range EMPs if they place stationary units near the enemy's front.
         If there are no stationary units to attack in the front, we will send Pings to try and score quickly.
         """
+        global cycle, counter
         # First, place basic defenses
         self.build_defences(game_state)
         # Now build reactive defenses based on where the enemy scored
@@ -101,35 +106,27 @@ class AlgoStrategy(gamelib.AlgoCore):
             encryptor_locations = [[5, 10], [6, 10], [7, 10], [6, 9], [7, 9]]
             game_state.attempt_spawn(ENCRYPTOR, encryptor_locations)
 
-    enemy_change = False
-    last_breach = False
-    last_index = 0
-
     def build_emp_ping_combo(self, game_state):
+        global enemy_change, last_breach, last_index, counter
         # build emp one to the right and up of the pings
         ping_spawn_location_options = [[8, 5], [22, 8]]
-        new_breach = self.breach_successful(game_state)
+        new_breach = (breachnum > 2)
 
-        if(!enemy_change){
-            if(last_breach and !new_breach){
+        if not enemy_change:
+            if last_breach and not new_breach:
                 enemy_change = True
-            }
-        }
 
-        if(!new_breach && !last_breach){
+        if not new_breach and not last_breach:
             counter += 1
             return
-        }
 
-        if(enemy_change){
+        if enemy_change:
             best_index = 1 - last_index
-        }else{
-            if(new_breach){
+        else:
+            if new_breach:
                 best_index = last_index
-            }else{
+            else:
                 best_index = 1 - last_index
-            }
-        }
 
         best_location = ping_spawn_location_options[best_index]
 
@@ -147,12 +144,6 @@ class AlgoStrategy(gamelib.AlgoCore):
 
         last_index = best_index
         last_breach = new_breach
-
-    def breach_successful(game_state):
-        state = json.loads(turn_string)
-        events = state["events"]
-        breaches = events["breach"]
-        return len(breaches) > 3
 
     def build_defences(self, game_state):
         """
@@ -296,6 +287,8 @@ class AlgoStrategy(gamelib.AlgoCore):
         return filtered
 
     def on_action_frame(self, turn_string):
+        global breachnum
+        breachcount = 0
         """
         This is the action frame of the game. This function could be called
         hundreds of times per turn and could slow the algo down so avoid putting slow code here.
@@ -315,6 +308,10 @@ class AlgoStrategy(gamelib.AlgoCore):
                 gamelib.debug_write("Got scored on at: {}".format(location))
                 self.scored_on_locations.append(location)
                 gamelib.debug_write("All locations: {}".format(self.scored_on_locations))
+            else: 
+                breachcount += 1
+
+        breachnum = breachcount
 
 
 if __name__ == "__main__":

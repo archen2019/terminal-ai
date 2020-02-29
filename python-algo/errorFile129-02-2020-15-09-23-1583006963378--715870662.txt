@@ -1,0 +1,4 @@
+  File "/home/archen/terminal-ai/python-algo/algo_strategy.py", line 113
+    if(!enemy_change){
+       ^
+SyntaxError: invalid syntax
