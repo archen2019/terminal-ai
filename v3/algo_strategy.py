@@ -89,7 +89,7 @@ class AlgoStrategy(gamelib.AlgoCore):
             # If they have many units in the front we can build a line for our EMPs to attack them at long range.
             if self.detect_enemy_unit(game_state, unit_type=None, valid_x=None, valid_y=[14, 15]) > 15:
                 self.emp_line_strategy(game_state)
-            elif self.detect_enemy_unit(game_state, unit_type=None, valid_x=[12, 13, 14, 1512, 13, 14, 1512, 13, 14, 1512, 13, 14, 1512, 13, 14, 1512, 13, 14, 1512, 13, 14, 1512, 13, 14, 1512, 13, 14, 1512, 13, 14, 1512, 13, 14, 1512, 13, 14, 15], valid_y = [14, 15]:
+            elif self.detect_enemy_unit(game_state, unit_type=None, valid_x=[12, 13, 14, 15], valid_y = [14, 15]) > 15:
                 game_state.attempt_spawn(SCRAMBLER, [8, 5])
             else:
                 # They don't have many units in the front so lets figure out their least defended area and send Pings there.
@@ -102,9 +102,6 @@ class AlgoStrategy(gamelib.AlgoCore):
                     best_location = self.least_damage_spawn_location(game_state, ping_spawn_location_options)
                     game_state.attempt_spawn(PING, best_location, 1000)
 
-                # Lastly, if we have spare cores, let's build some Encryptors to boost our Pings' health.
-                encryptor_locations = [[13, 2], [14, 2], [13, 3], [14, 3]]
-                game_state.attempt_spawn(ENCRYPTOR, encryptor_locations)
 
     def build_defences(self, game_state):
         """
@@ -147,6 +144,10 @@ class AlgoStrategy(gamelib.AlgoCore):
         game_state.attempt_spawn(DESTRUCTOR, destructors3)
 
         game_state.attempt_upgrade(destructors)
+
+        encryptor_locations = [[13, 2], [14, 2], [13, 3], [14, 3]]
+        game_state.attempt_spawn(ENCRYPTOR, encryptor_locations)
+
         game_state.attempt_upgrade(destructors2)
         game_state.attempt_upgrade(destructors3)
 
