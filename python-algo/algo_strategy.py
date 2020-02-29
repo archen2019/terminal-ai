@@ -146,14 +146,14 @@ class AlgoStrategy(gamelib.AlgoCore):
         game_state.attempt_spawn(FILTER, right_filters2)
         game_state.attempt_spawn(FILTER, left_filters2)
 
-        destructors2 = [[2, 12], [25, 12], [1, 12], [26, 12]]
+        destructors2 = [[2, 12], [25, 12], [1, 12], [23, 11]]
         game_state.attempt_spawn(DESTRUCTOR, destructors2)
 
         # upgrade filters so they soak more damage
         game_state.attempt_upgrade(right_filters)
         game_state.attempt_upgrade(left_filters)
 
-        destructors3 = [[2, 11], [3, 13], [24, 13], [25, 11], [20, 10], [21, 10]]
+        destructors3 = [[2, 11], [24, 11], [20, 10], [21, 10]]
         game_state.attempt_spawn(DESTRUCTOR, destructors3)
 
         game_state.attempt_upgrade(destructors)
