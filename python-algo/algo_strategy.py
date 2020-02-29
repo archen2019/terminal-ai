@@ -116,9 +116,10 @@ class AlgoStrategy(gamelib.AlgoCore):
             if last_breach and not new_breach:
                 enemy_change = True
 
-        if not new_breach and not last_breach:
-            counter += 1
-            return
+        if game_state.turn_number > 10:
+            if not new_breach and not last_breach:
+                counter += 1
+                return
 
         if enemy_change:
             best_index = 1 - last_index
@@ -308,7 +309,7 @@ class AlgoStrategy(gamelib.AlgoCore):
                 gamelib.debug_write("Got scored on at: {}".format(location))
                 self.scored_on_locations.append(location)
                 gamelib.debug_write("All locations: {}".format(self.scored_on_locations))
-            else: 
+            else:
                 breachcount += 1
 
         breachnum = breachcount
